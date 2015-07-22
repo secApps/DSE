@@ -30,7 +30,7 @@ public class LoginTask extends AsyncTask<String, Void, JSONObject>
     private static String loginURL = "http://www.finefoodsbd.net/AppData/userloginNew.php";
     String auth;
     String boid;
-    String cash;
+    String ipo;
     Context context;
     private JSONParser jsonParser;
     MainActivity mainActivity;
@@ -79,7 +79,7 @@ public class LoginTask extends AsyncTask<String, Void, JSONObject>
                     JSONArray json = jsonobject.getJSONArray("UserData");
                     boid = json.getJSONObject(0).getString("boid");
                     name = json.getJSONObject(0).getString("name");
-                    cash = json.getJSONObject(0).getString("cash");
+                    ipo = json.getJSONObject(0).getString("ipo");
                     Log.d("RESPONSE>>", (new StringBuilder()).append(boid).append(name).toString());
                 }
             }
@@ -96,7 +96,7 @@ public class LoginTask extends AsyncTask<String, Void, JSONObject>
                 bundle.putString("auth", auth);
                 bundle.putString("boid", boid);
                 bundle.putString("name", name);
-                bundle.putString("cash", cash);
+                bundle.putString("ipo", ipo);
                 in.putExtras(bundle);
                 context.startActivity(in);
                 mainActivity.finish();

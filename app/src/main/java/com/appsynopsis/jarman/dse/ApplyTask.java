@@ -8,6 +8,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,13 +32,13 @@ public class ApplyTask extends AsyncTask<String, Void, Integer>
     private JSONParser jsonParser;
     Apply mainActivity;
     String mobileno;
-    String name;
+    String name,ipo;
     private ProgressDialog progressDialog;
     String referenceno;
     private int responseCode;
 
     public ApplyTask(Apply apply, ProgressDialog progressdialog, String s, String s1, String s2, String s3,
-            String s4, String s5)
+            String s4, String s5,String s6)
     {
         auth = "12345jhkdfgdfoem123";
         responseCode = 0;
@@ -48,13 +49,14 @@ public class ApplyTask extends AsyncTask<String, Void, Integer>
         mainActivity = apply;
         boid = s3;
         cash = s5;
+        ipo=s6;
         name = s4;
         progressDialog = progressdialog;
     }
 @Override
    public Integer doInBackground(String... arg0) {
-    String as = ((EditText) mainActivity.findViewById(R.id.ipo)).getText().toString().replace("\n", "").replace(" ", "");
-    if (as.equals("")) {
+    //String ipo = ((TextView) mainActivity.findViewById(R.id.ipo)).getText().toString().replace("\n", "").replace(" ", "");
+    if (ipo.equals("")) {
         return 2;
     } else {
 
@@ -62,7 +64,7 @@ public class ApplyTask extends AsyncTask<String, Void, Integer>
         List<NameValuePair> arraylist = new ArrayList();
         arraylist.add(new BasicNameValuePair("mobile_no", mobileno));
         arraylist.add(new BasicNameValuePair("reference", referenceno));
-        arraylist.add(new BasicNameValuePair("ipo_name", as));
+        arraylist.add(new BasicNameValuePair("ipo_name", ipo));
         arraylist.add(new BasicNameValuePair("client_name", name));
         arraylist.add(new BasicNameValuePair("auth", auth));
         jsonParser = new JSONParser();
@@ -71,6 +73,9 @@ public class ApplyTask extends AsyncTask<String, Void, Integer>
             if (!json.isNull("status")) {
                 if (json.getString("status").equalsIgnoreCase("Success")) {
                     return 1;
+
+                }else if(json.getString("status").equalsIgnoreCase("Repeat")){
+                    return 4;
 
                 } else {
                     return 3;
@@ -92,20 +97,24 @@ public class ApplyTask extends AsyncTask<String, Void, Integer>
         {
             progressDialog.setMessage("Successfully applied");
             progressDialog.dismiss();
-            Toast.makeText(context, "Successfully applied", Toast.LENGTH_SHORT).show();
-            return;
+            Toast.makeText(context, "Successfully applied", Toast.LENGTH_LONG).show();
+
         }
         if (integer.intValue() == 2)
         {
-            Toast.makeText(context, "Please provide an ipo name ", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Need an IPO name to apply", Toast.LENGTH_LONG).show();
             progressDialog.dismiss();
-            return;
-        } else
+
+        }
+        if(integer.intValue() == 4){
+            Toast.makeText(context, "Can't apply again...... \n You already applied once!!", Toast.LENGTH_LONG).show();
+            progressDialog.dismiss();
+        } if(integer.intValue() == 3)
         {
             progressDialog.setMessage("Can't login");
             progressDialog.dismiss();
-            Toast.makeText(context, "Failure ", Toast.LENGTH_SHORT).show();
-            return;
+            Toast.makeText(context, "Failure ", Toast.LENGTH_LONG).show();
+
         }
     }
 

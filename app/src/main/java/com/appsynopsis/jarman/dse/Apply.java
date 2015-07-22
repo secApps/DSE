@@ -28,10 +28,10 @@ public class Apply extends Activity
     String cash;
     TextView cashs;
     String mobile;
-    String name;
+    String name,ipo;
     TextView names;
     String reference;
-    TextView refs;
+    TextView refs,ipos;
 
     public Apply()
     {
@@ -54,14 +54,16 @@ public class Apply extends Activity
         auth = bundle.getString("auth");
         boid = bundle.getString("boid");
         name = bundle.getString("name");
-        cash = bundle.getString("cash");
+        ipo = bundle.getString("ipo");
         boids = (TextView)findViewById(R.id.boid);
         names = (TextView)findViewById(R.id.name);
         cashs = (TextView)findViewById(R.id.cash);
         refs = (TextView)findViewById(R.id.ref);
+        ipos=(TextView)findViewById(R.id.ipo);
+        ipos.setText(ipo);
         boids.setText((new StringBuilder()).append("BOID: ").append(boid).toString());
         names.setText(name);
-        cashs.setText((new StringBuilder()).append("Cash ").append(cash).append(" Taka").toString());
+        cashs.setText(mobile);
         refs.setText((new StringBuilder()).append("Ref no.:").append(reference).toString());
         ((Button)findViewById(R.id.apply)).setOnClickListener(new View.OnClickListener() {
 
@@ -73,9 +75,9 @@ public class Apply extends Activity
                 {
                     ProgressDialog progressDialog = new ProgressDialog(
                             Apply.this);
-                    progressDialog.setMessage("Logging in...");
+                    progressDialog.setMessage("Applying......");
                     ApplyTask applyTask = new ApplyTask(Apply.this,
-                            progressDialog,mobile, reference,auth,boid,name,cash);
+                            progressDialog,mobile, reference,auth,boid,name,cash,ipo);
                     applyTask.execute();
                 } else
                 {
