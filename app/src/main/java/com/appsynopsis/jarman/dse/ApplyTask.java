@@ -67,6 +67,7 @@ public class ApplyTask extends AsyncTask<String, Void, Integer>
         arraylist.add(new BasicNameValuePair("ipo_name", ipo));
         arraylist.add(new BasicNameValuePair("client_name", name));
         arraylist.add(new BasicNameValuePair("auth", auth));
+        arraylist.add(new BasicNameValuePair("boid", boid));
         jsonParser = new JSONParser();
         JSONObject json = jsonParser.getJSONFromUrl(applyURL, arraylist);
         try {
