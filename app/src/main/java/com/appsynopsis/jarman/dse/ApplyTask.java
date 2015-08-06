@@ -24,7 +24,7 @@ import org.json.JSONObject;
 public class ApplyTask extends AsyncTask<String, Void, Integer>
 {
 
-    private static String applyURL = "http://www.finefoodsbd.net/AppData/application.php";
+    private static String applyURL = "http://www.sinha67.com/AppData/application.php";
     String auth;
     String boid;
     String cash;

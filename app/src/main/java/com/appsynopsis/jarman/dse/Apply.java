@@ -30,8 +30,8 @@ public class Apply extends Activity
     String mobile;
     String name,ipo;
     TextView names;
-    String reference;
-    TextView refs,ipos;
+    String reference,start,end;
+    TextView refs,ipos,starting,ending;
 
     public Apply()
     {
@@ -55,11 +55,17 @@ public class Apply extends Activity
         boid = bundle.getString("boid");
         name = bundle.getString("name");
         ipo = bundle.getString("ipo");
+        start=bundle.getString("start");
+       end= bundle.getString("end");
         boids = (TextView)findViewById(R.id.boid);
         names = (TextView)findViewById(R.id.name);
         cashs = (TextView)findViewById(R.id.cash);
         refs = (TextView)findViewById(R.id.ref);
         ipos=(TextView)findViewById(R.id.ipo);
+        starting=(TextView)findViewById(R.id.starting);
+        ending=(TextView)findViewById(R.id.ending);
+        starting.setText("Starting date : "+start);
+        ending.setText("Ending date : "+end);
         ipos.setText(ipo);
         boids.setText((new StringBuilder()).append("BOID: ").append(boid).toString());
         names.setText(name);
@@ -68,25 +74,24 @@ public class Apply extends Activity
         ((Button)findViewById(R.id.apply)).setOnClickListener(new View.OnClickListener() {
 
 
-
-            public void onClick(View view)
-            {
-                if (isNetworkAvailable())
-                {
-                    ProgressDialog progressDialog = new ProgressDialog(
-                            Apply.this);
-                    progressDialog.setMessage("Applying......");
-                    ApplyTask applyTask = new ApplyTask(Apply.this,
-                            progressDialog,mobile, reference,auth,boid,name,cash,ipo);
-                    applyTask.execute();
-                } else
-                {
+            public void onClick(View view) {
+                if (isNetworkAvailable()) {
+                    if (!ipo.isEmpty()) {
+                        ProgressDialog progressDialog = new ProgressDialog(
+                                Apply.this);
+                        progressDialog.setMessage("Applying......");
+                        ApplyTask applyTask = new ApplyTask(Apply.this,
+                                progressDialog, mobile, reference, auth, boid, name, cash, ipo);
+                        applyTask.execute();
+                    } else {
+                        Toast.makeText(getApplicationContext(),"SORRY!! \nThere is no IPO to apply currently",Toast.LENGTH_SHORT).show();
+                    }
+                } else {
                     Toast.makeText(getApplicationContext(), "Check your internet connection", Toast.LENGTH_SHORT).show();
                     return;
                 }
             }
 
-            
 
         });
         ((Button)findViewById(R.id.logout)).setOnClickListener(new View.OnClickListener() {

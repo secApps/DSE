@@ -27,10 +27,11 @@ import org.json.JSONObject;
 public class LoginTask extends AsyncTask<String, Void, JSONObject>
 {
 
-    private static String loginURL = "http://www.finefoodsbd.net/AppData/userloginNew.php";
+    private static String loginURL = "http://www.sinha67.com/AppData/userloginNew.php";
     String auth;
     String boid;
     String ipo;
+    String start,end;
     Context context;
     private JSONParser jsonParser;
     MainActivity mainActivity;
@@ -80,6 +81,8 @@ public class LoginTask extends AsyncTask<String, Void, JSONObject>
                     boid = json.getJSONObject(0).getString("boid");
                     name = json.getJSONObject(0).getString("name");
                     ipo = json.getJSONObject(0).getString("ipo");
+                    start=json.getJSONObject(0).getString("start");
+                    end=json.getJSONObject(0).getString("end");
                     Log.d("RESPONSE>>", (new StringBuilder()).append(boid).append(name).toString());
                 }
             }
@@ -97,6 +100,8 @@ public class LoginTask extends AsyncTask<String, Void, JSONObject>
                 bundle.putString("boid", boid);
                 bundle.putString("name", name);
                 bundle.putString("ipo", ipo);
+                bundle.putString("start", start);
+                bundle.putString("end", end);
                 in.putExtras(bundle);
                 context.startActivity(in);
                 mainActivity.finish();
